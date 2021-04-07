@@ -8,7 +8,7 @@ use App\Models\login;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-//use App\Http\Controllers\LoginController
+
 
 
 class LoginController extends Controller
@@ -27,16 +27,11 @@ class LoginController extends Controller
         if($users)
         {
             $request->session()->put('email', $data['email']);
-            /*$request->session()->put('f_name', $users['f_name']);
-            $request->session()->put('l_name', $users['l_name']);
-            $request->session()->put('phone_no', $users['phone_no']);
-            $request->session()->put('subscription', $users['subscription']);*/
-            //return view('todo_login',['users'=>$users]);
-
+           
             return view('todo_login');
         }else
         {
-
+            
             return view('welcome');
         }
         
