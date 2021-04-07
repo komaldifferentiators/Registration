@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-//namespace App\Http\Controllers;
+
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\login;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
+//use App\Http\Controllers\LoginController
 
 
 class LoginController extends Controller
@@ -14,24 +16,32 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        //print_r("test");die;
+       
+        $data = $request->input();
+        $email = $data['email'];
+        //print_r($email);
+        $password = $data['password'];
 
-       // $credentials = $request->only('email', 'password');
-        //print_r($credentials);die;
-
+        $users = DB::select("select * from registers where email = '$email' and password = '$password'");
         
+        if($users)
+        {
+            $request->session()->put('email', $data['email']);
+            /*$request->session()->put('f_name', $users['f_name']);
+            $request->session()->put('l_name', $users['l_name']);
+            $request->session()->put('phone_no', $users['phone_no']);
+            $request->session()->put('subscription', $users['subscription']);*/
+            //return view('todo_login',['users'=>$users]);
 
-        if (Auth::attempt($credentials)) {
-           // $request->session()->regenerate();
-            //print_r("test");die;
             return view('todo_login');
+        }else
+        {
+
+            return view('welcome');
         }
-
-        /*return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);*/
-
-        //return view('todo_login');
+        
+       
+        
     }
     /**
      * Display a listing of the resource.

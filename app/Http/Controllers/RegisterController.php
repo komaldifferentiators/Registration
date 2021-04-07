@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\register;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class RegisterController extends Controller
 {
@@ -35,6 +37,16 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
+        $message = ['f_name:required' => 'First name is required'];
+         $this->validate($request,[
+                'f_name'        =>      'required',
+                'l_name'        =>      'required',
+                'email'         =>      'required|email|unique:registers',
+                'password'      =>      'required|min:6',
+                'phone_no'      =>      'required|max:10',
+                'subscription'  =>      'required',
+            ],$message);
+
         $res = new register;
         $res->f_name = $request->input('f_name');
         $res->l_name = $request->input('l_name');
@@ -44,8 +56,19 @@ class RegisterController extends Controller
         $res->subscription = $request->input('subscription');
         $res->save();
 
-        $request->session()->flash('msg','Data Inserted Successfully');
-        return redirect('/');
+       
+
+
+        /*$data = $request->input();
+        $request->session()->put('user', $data['f_name']);
+         $request->session()->put('user1', $data['l_name']);
+          $request->session()->put('user2', $data['email']);
+           $request->session()->put('user3', $data['phone_no']);
+            $request->session()->put('user4', $data['subscription']);*/
+        //echo session('user');die;
+
+         //$request->session()->flash('msg','Data Inserted Successfully');
+        return redirect('todo_create');
     }
 
     /**

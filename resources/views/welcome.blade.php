@@ -14,28 +14,35 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             
 
-
+              
               <form action ="todo_submit" method="POST">
                   @csrf
                 <div class="form-group">
                   <label>First Name</label>
                   <input type="text" name="f_name" class="form-control p_input">
+                   @error('f_name')
+                      <span class = "text-danger">{{$message}}</span>
+                   @enderror
                 </div>
                 <div class="form-group">
                   <label>Last Name</label>
                   <input type="text" name="l_name" class="form-control p_input">
+                  {!! $errors->first('l_name', '<small class="text-danger">:message</small>') !!}
                 </div>
                 <div class="form-group">
                   <label>Email</label>
                   <input type="email" name="email" class="form-control p_input">
+                  {!! $errors->first('email', '<small class="text-danger">:message</small>') !!}
                 </div>
                 <div class="form-group">
                   <label>Password</label>
                   <input type="password" name="password" class="form-control p_input">
+                  {!! $errors->first('password', '<small class="text-danger">:message</small>') !!}
                 </div>
                  <div class="form-group">
                   <label>Phone Number</label>
                   <input type="text" name="phone_no" class="form-control p_input">
+                  {!! $errors->first('phone_no', '<small class="text-danger">:message</small>') !!}
                 </div>
                 
                 <div>
@@ -46,6 +53,7 @@
                     <option value="sub2" name="subscription">Subscription2</option>
                    
                 </select>
+                {!! $errors->first('subscription', '<small class="text-danger">:message</small>') !!}
             </div>
 
                 <div class="text-center">
